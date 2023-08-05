@@ -111,6 +111,8 @@ namespace zxorm {
 
         Connection(
             const char* file_name,
+            const void* key = nullptr,
+            int nKey = 0,
             int flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
             const char* z_vfs = nullptr,
             Logger logger = nullptr);
@@ -188,6 +190,8 @@ namespace zxorm {
     template <class... Table>
     Connection<Table...>::Connection(
             const char* file_name,
+            const void* key,
+            int nKey,
             int flags,
             const char* z_vfs,
             Logger logger)
@@ -211,6 +215,15 @@ namespace zxorm {
             auto err = ConnectionError("Unable to open sqlite connection", db_handle);
             log(log_level::Error, err);
             throw err;
+        }
+
+        if(key && nKey) {
+          result = sqlite3_key(db_handle, key, nKey);
+          if(result != SQLITE_OK) {
+            auto err = ConnectionError("Unable to decrypt sqlite database", db_handle);
+            log(log_level::Error, err);
+            throw err;
+          }
         }
 
         _db_handle = {db_handle, [this](sqlite3* handle) {

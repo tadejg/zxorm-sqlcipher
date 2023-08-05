@@ -1,5 +1,10 @@
-# ZxORM
-**Z**ach's **O**object **R**elational **M**apping library - A C++20 ORM for SQLite
+# SQLCipher ZxORM
+
+> **This is a fork of [ZxORM](https://github.com/crabmandable/zxorm) with only minor changes to support the 
+[SQLCipher](https://github.com/sqlcipher/sqlcipher) fork of [SQLite](https://github.com/sqlite/sqlite).**
+
+**Z**ach's **O**object **R**elational **M**apping library - A C++20 ORM for SQLCipher (a SQLite fork with support for
+encryption)
 ___
 
 `zxorm` is an attempt to create an ORM for C++ that achieves the following:
